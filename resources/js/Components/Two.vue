@@ -1,5 +1,5 @@
 <template>
-    <div id="chart" :data="data" :max="max"> {{now}} </div>
+    <div id="chart" :datatemp="datatemp" :max="max" :datatempx="datatempx"> {{now}} </div>
 </template>
 
 <script>
@@ -9,7 +9,8 @@
     export default {
         name: "Two",
         props: {
-          data: Array,
+          datatemp: Array,
+          datatempx: Array,
           max: Number
         },
         computed: {
@@ -18,12 +19,18 @@
                     bindto: '#chart',
                     data: {
 
-                        columns: this.data
+                        columns: this.datatemp
 
+                    },
+                    axis:{
+                        x: {
+                            type: 'category',
+                            categories: this.datatempx
+                        }
                     },
                     grid: {
                         y: {
-                            lines: [{value:this.max}]
+                            lines: [{value: this.max}]
                         }
                     }
                 });

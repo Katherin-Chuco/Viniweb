@@ -6,16 +6,12 @@
 
         <div class="mb-10">
             <div class="flex justify-between items-center">
-                <p>Medición de la temperatura en tiempo real.</p>
-
-                <a href="#" class="border border-grey px-8 py-2 rounded-full text-black font-bold text-xs" >
-                    Filtrar
-                </a>
+                <p>Medición de la temperatura en grados celcius (ºC) :</p>
 
             </div>
 
             <div class="block shadow flex items-center justify-center mb-6 bg-white" style="padding: 30px; margin-top: 10px">
-                <two :data="temperatureData" :max="maxTemperature"></two>
+                <two :datatemp="temperatureData" :max="maxTemperature" :datatempx="temperatureDataX"></two>
             </div>
         </div>
     </div>
@@ -32,19 +28,27 @@
                 maxTemperature: 350,
                 temperature: ['Temperatura'],
                 temperatureData: [],
+                temperatureDataX: []
 
             }
         },
         mounted() {
 
             //axios.get('http://192.168.43.2:8080/restapiv/medidas')
-            axios.get('/prueba')
+            axios.get('http://192.168.43.2:8080/restapiv/medidas/temp')
                 .then(response => {
                     // handle success
                     console.log(response);
-                    var temp = response.data['arregloTemp'];
+                    var temp = [];
+                    var tempx = [];
+
+                    for (var i = 0; i < response.data.temperaturas.length; i++) {
+                        temp.push(response.data.temperaturas[i].valor);
+                        tempx.push(new Date(response.data.temperaturas[i].fecha).toLocaleString());
+                    }
 
                     this.temperatureData.push(this.temperature.concat(temp));
+                    this.temperatureDataX = tempx;
                 })
                 .catch(function (error) {
                     // handle error
