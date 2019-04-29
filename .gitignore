@@ -1,0 +1,62 @@
+/vendor
+/.idea
+Homestead.json
+Homestead.yaml
+#======================
+# Temp OS files
+#======================
+.DS_Store
+.DS_Store?
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+#======================
+# Restricted files
+#======================
+._*
+*~
+.~lock.*
+
+#======================
+# IDE Files
+#======================
+nbproject
+.buildpath
+.idea
+.project
+.settings
+
+#======================
+# Other files
+#======================
+.php_cs.cache
+/.phpstorm.meta.php
+/_ide_helper.php
+*.swp
+*.mo
+*.mwb.bak
+.env
+*.httpd.conf
+yarn.lock
+error.log
+access.log
+composer.phar
+/tags
+npm-debug.log
+webpack.mix.custom.js
+.phpunit.result.cache
+
+#======================
+# Temp files
+#======================
+/tests/coverage
+/node_modules
+/public/storage
+/storage/*.key
+
+#======================
+# Elastic Beanstalk Files
+#======================
+.elasticbeanstalk/*
