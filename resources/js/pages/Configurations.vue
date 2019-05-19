@@ -1,69 +1,109 @@
 <template>
     <div>
-        <h1 class="font-normal text-3xl text-green-darkest leading-none mb-8">
-            Configuraciones
-        </h1>
 
-        <div class="mb-10">
-            <div class="card-header flex justify-between items-center">
-                <p>Configura el valor maximo y minimo de tus mediciones: </p>
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Configuraciones</h1>
+        </div>
 
+        <p class="mb-4">Configura el valor máximo y mínimo de tus mediciones: </p>
+
+        <div class="row">
+
+            <div class="col-lg-4">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Humedad del Ambiente</h6>
+                        <div class="dropdown no-arrow">
+                            <button @click="editA" class="dropdown-toggle" href="#" role="button">
+                                <i class="fas fa-edit fa-sm fa-fw text-gray-400"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="pt-1 flex-col">
+                            <label>Valor mínimo: </label>
+                            <input v-model.number="ambMin" type="number" class="ml-1 border-2" :disabled="!showA">
+                        </div>
+                        <div class="pt-4 flex-col">
+                            <label>Valor máximo:</label>
+                            <input v-model.number="ambMax" type="number" class="ml-1 border-2" :disabled="!showA">
+                        </div>
+
+                        <br/>
+                        <button v-if="showA" @click="cancelA"  class="btn btn-primary btn-block rounded-full text-white font-bold " >
+                            Cancelar
+                        </button>
+                        <button v-if="showA" @click="save(ambMax, ambMin)" class=" btn btn-primary btn-block rounded-full text-white font-bold " >
+                            Guardar
+                        </button>
+
+                    </div>
+                </div>
             </div>
 
-            <div class="block shadow flex-row mb-6 bg-white" style="padding: 30px; margin-top: 10px; height: 500px">
-                <form>
-                    <div>
-                        <h4>Humedad del ambiente:</h4>
-                        <div>
-                            <div class="pt-4 flex-col">
-                                <label>Valor mínimo: </label>
-                                <input type="text" class="ml-4 border-2"> %
-                            </div>
-                            <div class="pt-4 flex-col">
-                                <label>Valor máximo:</label>
-                                <input type="text" class="ml-4 border-2"> %
-                            </div>
+            <div class="col-lg-4">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Humedad del Suelo</h6>
+                        <div class="dropdown no-arrow">
+                            <button @click="editS" class="dropdown-toggle" href="#" role="button">
+                                <i class="fas fa-edit fa-sm fa-fw text-gray-400"></i>
+                            </button>
                         </div>
                     </div>
+                    <div class="card-body">
 
-                    <div class="mt-8">
-                        <h4>Humedad del suelo:</h4>
-                        <div>
-                            <div class="pt-4 flex-col">
-                                <label>Valor mínimo: </label>
-                                <input type="text" class="ml-4 border-2"> %
-                            </div>
-                            <div class="pt-4 flex-col">
-                                <label>Valor máximo:</label>
-                                <input type="text" class="ml-4 border-2"> %
-                            </div>
+                        <div class="pt-1 flex-col">
+                            <label>Valor mínimo: </label>
+                            <input v-model.number="sueMin" type="number" class="ml-1 border-2" :disabled="!showS">
                         </div>
-                    </div>
+                        <div class="pt-4 flex-col">
+                            <label>Valor máximo:</label>
+                            <input v-model.number="sueMax" type="number" class="ml-1 border-2" :disabled="!showS">
+                        </div>
 
-                    <div class="mt-8">
-                        <h4>Temperatura del ambiente:</h4>
-                        <div>
-                            <div class="pt-4 flex-col">
-                                <label>Valor mínimo: </label>
-                                <input type="text" class="ml-4 border-2"> ºC
-                            </div>
-                            <div class="pt-4 flex-col">
-                                <label>Valor máximo:</label>
-                                <input type="text" class="ml-4 border-2"> ºC
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex-col float-left mt-10 ">
-                        <a href="#" class="border border-grey px-8 py-2 rounded-full text-white font-bold text-xs bg-blue-light" >
-                            Resetear
-                        </a>
-                        <a href="#" class="border border-grey px-8 py-2 rounded-full text-white font-bold text-xs bg-blue-light ml-16" >
+                        <br/>
+                        <button v-if="showS" @click="cancelS" class="btn btn-primary btn-block rounded-full text-white font-bold">
+                            Cancelar
+                        </button>
+                        <button v-if="showS" @click="save(sueMax, sueMin)" class="btn btn-primary btn-block rounded-full text-white font-bold">
                             Guardar
-                        </a>
+                        </button>
                     </div>
-                </form>
+                </div>
+            </div>
 
 
+            <div class="col-lg-4">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Temperatura del Ambiente</h6>
+                        <div class="dropdown no-arrow">
+                            <button @click="editT" class="dropdown-toggle" href="#" role="button">
+                                <i class="fas fa-edit fa-sm fa-fw text-gray-400"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="pt-1 flex-col">
+                            <label>Valor mínimo: </label>
+                            <input v-model.number="tempMin" type="number" class="ml-1 border-2" :disabled="!showT"> ºC
+                        </div>
+                        <div class="pt-4 flex-col">
+                            <label>Valor máximo:</label>
+                            <input v-model.number="tempMax" type="number" class="ml-1 border-2" :disabled="!showT"> ºC
+                        </div>
+
+                        <br/>
+                        <button v-if="showT" @click="cancelT" class="btn btn-primary btn-block rounded-full text-white font-bold" >
+                            Cancelar
+                        </button>
+                        <button v-if="showT" @click="save(tempMax, tempMin)" class="btn btn-primary btn-block rounded-full text-white font-bold" >
+                            Guardar
+                        </button>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -72,14 +112,98 @@
 <script>
     export default {
         name: "Configurations",
-        mounted: function () {
-            axios({
-                method: 'get',
-                url: '/prueba/reportes'
-            }).then(function (response) {
-                console.log(response);
-            });
+        data: function(){
+          return {
+              showS: false,
+              showA: false,
+              showT: false,
+              ambMin: 0,
+              sueMin: 0,
+              tempMin: 0,
+              ambMax: 0,
+              sueMax: 0,
+              tempMax: 0,
+          }
         },
+        mounted: function () {
+            this.send();
+        },
+        methods: {
+            send: function () {
+                axios({
+                    method: 'get',
+                    url: 'defecto'
+                }).then(response => {
+                    // handle success
+                    console.log(response);
+
+                    var dataPrueba = {
+                        ambiente: {
+                            min: 500,
+                            max: 7000
+                        },
+                        suelo: {
+                            min: 0,
+                            max: 6
+                        },
+                        temperatura: {
+                            min: 0,
+                            max: 25
+                        }
+                    };
+
+                    this.ambMin = response.data[2].valormax;
+                    this.ambMax = response.data[2].valormax;
+                    this.sueMin = response.data[3].valormax;
+                    this.sueMax = response.data[3].valormax;
+                    this.tempMin = response.data[1].valormax;
+                    this.tempMax = response.data[1].valormin;
+
+                });
+            },
+            save: function (id, max, min) {
+
+                let data = [
+                    {'id': 1, 'valormax': max, 'valormin': min }
+                ];
+
+
+                axios({
+                    method: 'post',
+                    url: 'guardarconfig',
+                    headers: { 'content-type': 'application/json' },
+                    data: {
+                        id: id,
+                        valormax: max,
+                        valormin: min
+                    }
+                }).then(response => {
+                    // handle success
+                    console.log(response);
+
+                });
+            },
+
+            editS: function () {
+                this.showS = true;
+            },
+            editA: function () {
+                this.showA = true;
+            },
+            editT: function () {
+                this.showT = true;
+            },
+
+            cancelS: function () {
+                this.showS = false;
+            },
+            cancelA: function () {
+                this.showA = false;
+            },
+            cancelT: function () {
+                this.showT = false;
+            }
+        }
 
     }
 </script>

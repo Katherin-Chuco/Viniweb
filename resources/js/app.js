@@ -4,13 +4,12 @@ import axios from 'axios';
 
 import router from './routes';
 
-import Navbar from "./Components/Navbar";
-
 window.Vue = Vue;
-window.axios = axios;
+window.axios = axios.create({
+    baseURL: 'http://18.223.131.92:8080/restapiv/',
+});
 
 Vue.use(VueRouter);
-
 
 new Vue({
     router,
@@ -19,7 +18,6 @@ new Vue({
             numAlert: 0
         }
     },
-    components: { Navbar },
     mounted: function () {
         axios({
             method: 'get',
@@ -29,4 +27,4 @@ new Vue({
         });
     }
 
-}).$mount("#app");
+}).$mount("#wrapper");

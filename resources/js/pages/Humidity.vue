@@ -1,17 +1,23 @@
 <template>
     <div>
-        <h1 class="font-normal text-3xl text-green-darkest leading-none mb-8">
-            Humedad
-        </h1>
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Humedad del Ambiente</h1>
+        </div>
 
-        <div class="mb-10">
-            <div class="flex justify-between items-center">
-                <p>Medición de la humedad en tiempo real.</p>
-
-            </div>
-
-            <div class="block shadow flex items-center justify-center mb-6 bg-white" style="padding: 30px; margin-top: 10px">
-                <two :data="humidityData" :max="maxHumidity"></two>
+        <div class="row">
+            <div class="col-xl-10 col-lg-7">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Diagrama de la Humedad del Ambiente en Porcentaje (%)</h6>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div class="chart-area">
+                            <two :datatemp="humidityDataC" :max="maxHumidityC" :datatempx="climateHumidityDatax"></two>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -27,26 +33,32 @@
         },
         data: function() {
           return {
-              climateHumidityData: ['Humedad del suelo'],
-              groundHumidityData: ['Humedad del aire'],
-              humidityData: [],
-              maxHumidity: 0.3
+              climateHumidityData: ['Humedad del ambiente'],
+              groundHumidityData: ['Humedad del suelo'],
+              humidityDataG: [],
+              humidityDataC: [],
+              climateHumidityDatax: [],
+              groundHumidityDatax: [],
+              maxHumidityG: 7000,
+              maxHumidityC: 6,
+
           }
         },
         mounted() {
 
-            //axios.get('http://192.168.43.2:8080/restapiv/medidas')
-            axios.get('/prueba')
+            axios.get('medidas/humambiente')
                 .then(response => {
                     // handle success
                     console.log(response);
-                    var humOne = response.data['arregloHumA'];
-                    var humTwo = response.data['arregloHumS'];
+                    var humOne = [];
+
+                    for (var i = 0; i < response.data.humsAmbiente.length; i++) {
+                        humOne.push(response.data.humsAmbiente[i].valor);
+                        this.climateHumidityDatax.push(new Date(response.data.humsAmbiente[i].fecha).toLocaleString());
+                    }
 
                     this.climateHumidityData = this.climateHumidityData.concat(humOne);
-                    this.groundHumidityData = this.groundHumidityData.concat(humTwo);
-                    this.humidityData.push(this.climateHumidityData);
-                    this.humidityData.push(this.groundHumidityData);
+                    this.humidityDataC.push(this.climateHumidityData);
                 })
                 .catch(function (error) {
                     // handle error

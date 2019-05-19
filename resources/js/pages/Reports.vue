@@ -1,21 +1,21 @@
 <template>
 
     <div>
-        <h1 class="font-normal text-3xl text-green-darkest leading-none mb-8">
-            Reportes
-        </h1>
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Reportes</h1>
+        </div>
 
         <div class="mb-32">
 
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <div class="flex justify-between items-center">
+                    <div class="block sm:flex justify-between items-center">
 
                         <div>
-                            <p class="pb-2">Sensor:</p>
+                            <h6>Sensor:</h6>
                             <select class="custom-select custom-select-sm" v-model="selected">
                                 <option disabled value=""> -- </option>
-                                <option>Humedad del aire</option>
+                                <option>Humedad del ambiente</option>
                                 <option>Humedad del suelo</option>
                                 <option>Temperatura</option>
                             </select>
@@ -23,45 +23,35 @@
 
 
                         <div>
-                            <p class="pb-2">Desde:</p>
+                            <h6>Desde:</h6>
                             <datepicker v-model="time1"  :first-day-of-week="1" lang="es"></datepicker>
                         </div>
 
                         <div>
-                            <p class="pb-2">Hasta:</p>
+                            <h6>Hasta:</h6>
                             <datepicker v-model="time2" :first-day-of-week="1" lang="es"></datepicker>
                         </div>
 
-                        <a href="#" class="border border-grey px-8 py-2 rounded-full text-black font-bold text-xs " @click="send">
+                        <a href="#" class="border border-grey px-8 py-2 rounded-full text-white font-bold text-xs bg-gradient-primary" @click="send">
                             Filtrar
                         </a>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" v-if="dataTable.length > 0">
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <table class="table table-bordered" id="dataTablew" width="100%" cellspacing="0">
                             <thead>
                             <tr>
+                                <th>Nº</th>
                                 <th>Fecha</th>
                                 <th>Valor</th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody v-for="(item, index) in dataTable">
                             <tr>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
-                            </tr>
-                            <tr>
-                                <td>2011/07/25</td>
-                                <td>$170,750</td>
-                            </tr>
-                            <tr>
-                                <td>2009/01/12</td>
-                                <td>$86,000</td>
-                            </tr>
-                            <tr>
-                                <td>2012/03/29</td>
-                                <td>$433,060</td>
+                                <td>{{index+1}}</td>
+                                <td>{{dateFormat(item.fecha)}}</td>
+                                <td>{{item.valor}}</td>
                             </tr>
 
                             </tbody>
@@ -94,16 +84,16 @@
                         dateRange: 'Select Date Range'
                     }
                 },
-                selected:''
+                selected:'',
+                dataTable: [],
+                sensor: ''
             }
         },
         methods: {
             send: function () {
-                console.log('desde: ', new Date(this.time1).toLocaleDateString('en-US'));
-                console.log('hasta: ', new Date(this.time2));
-                console.log('select: ',this.selected)
+
                 var id = 0;
-                if (this.selected === 'Humedad del aire') {
+                if (this.selected === 'Humedad del ambiente') {
                    id = 1;
 
                 } else if (this.selected === 'Humedad del suelo') {
@@ -113,19 +103,57 @@
                     id = 3;
                 }
 
+                let objeto = {};
+                objeto.id = id;
+                objeto.start = new Date(this.time1).toLocaleDateString('en-US');
+                objeto.end = new Date(this.time2).toLocaleDateString('en-US');
+
+                let datos = JSON.stringify(objeto);
+
+                //http://192.168.43.2:8080/restapiv/dashboard
                 axios({
-                    method: 'get',
-                    url: '/prueba/reportes',
-                    data: {
-                        id: id,
-                        start: new Date(this.time1).toLocaleDateString('en-US'),
-                        end: new Date(this.time2).toLocaleDateString('en-US')
+                    method: 'post',
+                    url: 'dashboard',
+                    headers: { 'content-type': 'application/json' },
+                    data: datos
+                }).then(response => {
+
+                    if(!response.data) {
+                        var prueba = {
+                            arregloHumS: [
+                                {id:1,valor:0.30,fecha:"2019-04-29T15:47:47.000+0000"},
+                                {id:2,valor:0.40,fecha:"2019-04-29T15:47:47.000+0000"},
+                                {id:3,valor:0.20,fecha:"2019-04-29T15:47:47.000+0000"}
+                            ]
+                            ,arregloHumA: [
+                                {id:1,valor:0.70,fecha:"2019-04-29T15:47:04.000+0000"},
+                                {id:2,valor:0.66,fecha:"2019-04-29T15:47:22.000+0000"},
+                                {id:3,valor:0.72,fecha:"2019-04-29T15:47:22.000+0000"}
+                            ],
+                            arregloTemp:[
+                                {id:1,valor:20.00,fecha:"2019-04-29T15:15:13.000+0000"},
+                                {id:2,valor:30.00,fecha:"2019-04-29T15:15:23.000+0000"},
+                                {id:3,valor:25.00,fecha:"2019-04-29T15:15:32.000+0000"}
+                            ]
+                        };
                     }
-                }).then(function (response) {
-                    console.log(response);
+
+
+                    if (this.selected === 'Humedad del ambiente') {
+                        this.dataTable = response.data.arregloHumA;
+
+                    } else if (this.selected === 'Humedad del suelo') {
+                        this.dataTable = response.data.arregloHumS;
+
+                    } else if (this.selected === 'Temperatura') {
+                        this.dataTable = response.data.arregloTemp;
+                    }
                 });
+            },
+            dateFormat: function (fecha) {
+                return new Date(fecha).toLocaleString()
             }
 
-    }
+        }
     }
 </script>

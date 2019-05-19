@@ -1,9 +1,7 @@
 <template>
     <div>
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="font-normal text-3xl text-green-darkest leading-none mb-4">
-                Dashboard
-            </h1>
+            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
         </div>
 
         <div class="row">
@@ -12,15 +10,6 @@
             <card title="Humedad del suelo" type="porcentaje" :value="groundHumidity"></card>
         </div>
 
-        <div class="mb-10">
-            <div class="flex justify-between items-center">
-                <p>Medición de la temperatura y humedad en tiempo real.</p>
-            </div>
-
-            <div class="block shadow flex items-center justify-center mb-6 bg-white" style="padding: 30px; margin-top: 10px">
-                <one :dataone="temperatureData" :datatwo="climateHumidityData" :datathree="groundHumidityData"></one>
-            </div>
-        </div>
 
     </div>
 
@@ -43,21 +32,34 @@
               climateHumidity: 75,
               groundHumidity: 65,
               temperatureData: ['Temperatura'],
-              climateHumidityData: ['Humedad del suelo'],
-              groundHumidityData: ['Humedad del aire']
+              climateHumidityData: ['Humedad del ambiente'],
+              groundHumidityData: ['Humedad del suelo'],
+              chartx: [],
 
           }
         },
         mounted() {
 
-            //axios.get('http://192.168.43.2:8080/restapiv/medidas')
-            axios.get('/prueba')
+            axios.get('dashboard')
                 .then(response => {
                     // handle success
                     console.log(response);
-                    var temp = response.data['arregloTemp'];
-                    var humOne = response.data['arregloHumA'];
-                    var humTwo = response.data['arregloHumS'];
+                    var temp = [];
+                    var humOne = [];
+                    var humTwo = [];
+
+                    for(var i = 0; i < response.data.arregloTemp.length; i++) {
+                        temp.push(response.data.arregloTemp[i].valor);
+                        this.chartx.push(new Date(response.data.arregloTemp[i].fecha).toLocaleString())
+                    }
+
+                    for(var i = 0; i < response.data.arregloHumS.length; i++) {
+                        humTwo.push(response.data.arregloHumS[i].valor);
+                    }
+
+                    for(var i = 0; i < response.data.arregloHumA.length; i++) {
+                        humOne.push(response.data.arregloHumA[i].valor);
+                    }
 
                     this.temperatureData = this.temperatureData.concat(temp);
                     this.climateHumidityData = this.climateHumidityData.concat(humOne);

@@ -1,5 +1,5 @@
 <template>
-    <div id="uno" :dataone="dataone" :datatwo="datatwo" :datathree="datathree" > {{now}}</div>
+    <div id="uno" :dataone="dataone" :datatwo="datatwo" :datathree="datathree" :datatempx="datatempx" > {{now}}</div>
 </template>
 
 <script>
@@ -11,7 +11,8 @@
         props: {
             dataone: Array,
             datatwo: Array,
-            datathree: Array
+            datathree: Array,
+            datatempx: Array
         },
         computed: {
             now: function() {
@@ -24,7 +25,8 @@
                             this.datathree
                         ],
                         axes: {
-                            Temperatura: 'y2'
+                            Temperatura: 'y2',
+
                         },
                         types: {
                             Temperatura: 'bar' // ADD
@@ -43,6 +45,10 @@
                                 text: 'ºC',
                                 position: 'outer-middle'
                             }
+                        },
+                        x: {
+                            type: 'category',
+                            categories: this.datatempx
                         }
                     }
                 });

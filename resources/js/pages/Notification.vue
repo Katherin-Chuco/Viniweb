@@ -1,14 +1,14 @@
 <template>
     <div>
-        <h1 class="font-normal text-3xl text-green-darkest leading-none mb-8">
-            Alertas
-        </h1>
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Alertas</h1>
+        </div>
 
         <div class="mb-32">
 
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                   <h5>Alertas recientes:</h5>
+                    <h6 class="m-0 font-weight-bold text-primary">Alertas recientes:</h6>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -54,11 +54,49 @@
 <script>
     export default {
         name: "Notification",
+
+        data: function() {
+            return {
+                alertTable: []
+            }
+        },
         mounted: function () {
             axios({
                 method: 'get',
                 url: '/prueba/reportes'
-            }).then(function (response) {
+            }).then(response => {
+                var dataPrueba = {
+                    arregloHumS: [
+                        {id:1,valor:0.30,fecha:"2019-04-29T15:47:47.000+0000"},
+                        {id:2,valor:0.40,fecha:"2019-04-29T15:47:47.000+0000"},
+                        {id:3,valor:0.20,fecha:"2019-04-29T15:47:47.000+0000"}
+                    ]
+                    ,arregloHumA:
+                        [
+                            {id:1,valor:0.70,fecha:"2019-04-29T15:47:04.000+0000"},
+                            {id:2,valor:0.66,fecha:"2019-04-29T15:47:22.000+0000"},
+                            {id:3,valor:0.72,fecha:"2019-04-29T15:47:22.000+0000"}
+                        ],
+                    arregloTemp:[
+                        {id:1,valor:20.00,fecha:"2019-04-29T15:15:13.000+0000"},
+                        {id:2,valor:30.00,fecha:"2019-04-29T15:15:23.000+0000"},
+                        {id:3,valor:25.00,fecha:"2019-04-29T15:15:32.000+0000"}
+                    ]
+                };
+
+                if (dataPrueba.arregloHumA && (dataPrueba.arregloHumA.length > 0) ) {
+                    //for(var i = 0; i < dataPrueba.arregloHumA.length; i++) {}
+                    this.dataTable.concat(dataPrueba.arregloHumA);
+
+                } else if (dataPrueba.arregloHumS && (dataPrueba.arregloHumS.length > 0)) {
+                    //for(var i = 0; i < dataPrueba.data.arregloHumS.length; i++) {}
+                    this.dataTable.concat(dataPrueba.arregloHumS);
+
+                } else if (dataPrueba.arregloTemp && (dataPrueba.arregloHumA.arregloTemp > 0)) {
+                    //for(var i = 0; i < dataPrueba.data.arregloTemp.length; i++) {}
+                    this.dataTable.concat(dataPrueba.arregloTemp);
+                }
+
                 console.log(response);
             });
         },
