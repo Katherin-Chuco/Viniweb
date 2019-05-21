@@ -1,6 +1,16 @@
 <template>
     <div>
 
+        <div v-if="showMessageS" class="px-3 py-1 bg-success text-white d-flex flex-row align-items-center justify-content-between" >
+            <p>{{messageS}} </p> <button @click="closeMessage" class="text-white"><p>X</p></button>
+        </div>
+
+        <div v-if="showMessageE" class="px-3 py-1 bg-warning text-white d-flex flex-row align-items-center justify-content-between" >
+            <p>{{messageE}} </p> <button @click="closeMessage" class="text-white"><p>X</p></button>
+        </div>
+
+        <br/>
+
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Configuraciones</h1>
         </div>
@@ -33,7 +43,7 @@
                         <button v-if="showA" @click="cancelA"  class="btn btn-primary btn-block rounded-full text-white font-bold " >
                             Cancelar
                         </button>
-                        <button v-if="showA" @click="save(ambMax, ambMin)" class=" btn btn-primary btn-block rounded-full text-white font-bold " >
+                        <button v-if="showA" @click="save(2, ambMax, ambMin)" class=" btn btn-primary btn-block rounded-full text-white font-bold " >
                             Guardar
                         </button>
 
@@ -66,7 +76,7 @@
                         <button v-if="showS" @click="cancelS" class="btn btn-primary btn-block rounded-full text-white font-bold">
                             Cancelar
                         </button>
-                        <button v-if="showS" @click="save(sueMax, sueMin)" class="btn btn-primary btn-block rounded-full text-white font-bold">
+                        <button v-if="showS" @click="save(3, sueMax, sueMin)" class="btn btn-primary btn-block rounded-full text-white font-bold">
                             Guardar
                         </button>
                     </div>
@@ -98,7 +108,7 @@
                         <button v-if="showT" @click="cancelT" class="btn btn-primary btn-block rounded-full text-white font-bold" >
                             Cancelar
                         </button>
-                        <button v-if="showT" @click="save(tempMax, tempMin)" class="btn btn-primary btn-block rounded-full text-white font-bold" >
+                        <button v-if="showT" @click="save(1, tempMax, tempMin)" class="btn btn-primary btn-block rounded-full text-white font-bold" >
                             Guardar
                         </button>
 
@@ -123,6 +133,11 @@
               ambMax: 0,
               sueMax: 0,
               tempMax: 0,
+              messageS: "",
+              messageE: "",
+              showMessageS: false,
+              showMessageE: false,
+
           }
         },
         mounted: function () {
@@ -134,39 +149,17 @@
                     method: 'get',
                     url: 'defecto'
                 }).then(response => {
-                    // handle success
-                    console.log(response);
 
-                    var dataPrueba = {
-                        ambiente: {
-                            min: 500,
-                            max: 7000
-                        },
-                        suelo: {
-                            min: 0,
-                            max: 6
-                        },
-                        temperatura: {
-                            min: 0,
-                            max: 25
-                        }
-                    };
-
-                    this.ambMin = response.data[2].valormax;
-                    this.ambMax = response.data[2].valormax;
-                    this.sueMin = response.data[3].valormax;
-                    this.sueMax = response.data[3].valormax;
-                    this.tempMin = response.data[1].valormax;
-                    this.tempMax = response.data[1].valormin;
+                    this.ambMin = response.data[1].valormin;
+                    this.ambMax = response.data[1].valormax;
+                    this.sueMin = response.data[2].valormin;
+                    this.sueMax = response.data[2].valormax;
+                    this.tempMin = response.data[0].valormin;
+                    this.tempMax = response.data[0].valormax;
 
                 });
             },
             save: function (id, max, min) {
-
-                let data = [
-                    {'id': 1, 'valormax': max, 'valormin': min }
-                ];
-
 
                 axios({
                     method: 'post',
@@ -178,9 +171,15 @@
                         valormin: min
                     }
                 }).then(response => {
-                    // handle success
-                    console.log(response);
 
+                    this.messageS= "Se guardo correctamente";
+                    console.log(response);
+                    this.send();
+                    this.showMessageS= true;
+
+                }).catch( error => {
+                    this.messageE= "Ocurrio un error. Vuelva a intentarlo.";
+                    this.showMessageE= true;
                 });
             },
 
@@ -202,6 +201,11 @@
             },
             cancelT: function () {
                 this.showT = false;
+            },
+
+            closeMessage: function () {
+                this.showMessageS = false;
+                this.showMessageE = false;
             }
         }
 

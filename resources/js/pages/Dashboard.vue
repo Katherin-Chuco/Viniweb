@@ -40,8 +40,12 @@
         },
         mounted() {
 
-            axios.get('dashboard')
-                .then(response => {
+            axios({
+                method: 'post',
+                url: 'dashboard',
+                headers: { 'content-type': 'application/json' },
+                data: {}
+            }).then(response => {
                     // handle success
                     console.log(response);
                     var temp = [];
