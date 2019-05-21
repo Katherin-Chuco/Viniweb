@@ -161,6 +161,10 @@
             },
             save: function (id, max, min) {
 
+                this.showS = false;
+                this.showA = false;
+                this.showT = false;
+
                 axios({
                     method: 'post',
                     url: 'guardarconfig',
