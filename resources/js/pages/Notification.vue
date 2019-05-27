@@ -61,6 +61,11 @@
             }
         },
         mounted: function () {
+
+            if (this.$root.token === "") {
+                this.$router.push({ name: 'Login'});
+            }
+
             axios({
                 method: 'get',
                 url: '/prueba/reportes'

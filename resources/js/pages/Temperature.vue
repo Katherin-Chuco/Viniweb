@@ -41,6 +41,10 @@
         },
         mounted() {
 
+            if (this.$root.token === "") {
+                this.$router.push({ name: 'Login'});
+            }
+
             //axios.get('http://192.168.43.2:8080/restapiv/medidas')
             axios.get('medidas/temp')
                 .then(response => {

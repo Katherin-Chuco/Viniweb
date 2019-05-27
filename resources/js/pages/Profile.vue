@@ -37,7 +37,14 @@
 
 <script>
     export default {
-        name: "Profile"
+        name: "Profile",
+
+        mounted() {
+
+            if (this.$root.token === "") {
+                this.$router.push({ name: 'Login'});
+            }
+        }
     }
 </script>
 

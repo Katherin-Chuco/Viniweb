@@ -177,7 +177,6 @@
                 }).then(response => {
 
                     this.messageS= "Se guardo correctamente";
-                    console.log(response);
                     this.send();
                     this.showMessageS= true;
 
@@ -199,17 +198,26 @@
 
             cancelS: function () {
                 this.showS = false;
+                this.send()
             },
             cancelA: function () {
                 this.showA = false;
+                this.send()
             },
             cancelT: function () {
                 this.showT = false;
+                this.send()
             },
 
             closeMessage: function () {
                 this.showMessageS = false;
                 this.showMessageE = false;
+            }
+        },
+        mounted() {
+
+            if (this.$root.token === "") {
+                this.$router.push({ name: 'Login'});
             }
         }
 

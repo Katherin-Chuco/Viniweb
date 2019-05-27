@@ -154,6 +154,12 @@
                 return new Date(fecha).toLocaleString()
             }
 
+        },
+        mounted() {
+
+            if (this.$root.token === "") {
+                this.$router.push({ name: 'Login'});
+            }
         }
     }
 </script>

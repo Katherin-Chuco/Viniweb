@@ -46,6 +46,10 @@
         },
         mounted() {
 
+            if (this.$root.token === "") {
+                this.$router.push({ name: 'Login'});
+            }
+
             axios.get('medidas/humambiente')
                 .then(response => {
                     // handle success

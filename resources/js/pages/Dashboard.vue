@@ -40,6 +40,10 @@
         },
         mounted() {
 
+            if (this.$root.token === "") {
+                this.$router.push({ name: 'Login'});
+            }
+
             axios({
                 method: 'post',
                 url: 'dashboard',

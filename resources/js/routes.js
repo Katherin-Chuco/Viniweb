@@ -8,12 +8,13 @@ import Reports from "./pages/Reports"
 import Configurations from './pages/Configurations'
 import Notification from './pages/Notification'
 import Profile from './pages/Profile'
+import Login from './pages/Login'
 
 
 
 const routes = [
     {
-        path:'/',
+        path:'/home',
         name: 'Dashboard',
         component: Dashboard
     },
@@ -51,6 +52,11 @@ const routes = [
         path: '/perfil',
         name: 'Profile',
         component: Profile
+    },
+    {
+        path: '/',
+        name: 'Login',
+        component: Login
     }
 ];
 

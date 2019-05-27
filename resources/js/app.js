@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import axios from 'axios';
+import Login from './pages/Login'
 
 import router from './routes';
 
@@ -13,11 +14,25 @@ Vue.use(VueRouter);
 
 new Vue({
     router,
+    component: {
+        Login
+    },
+
     data: function (){
         return {
-            numAlert: 0
+            numAlert: 0,
+            showContent: false,
+            token: ''
         }
     },
+    methods: {
+        cerrarSesion: function () {
+            this.token = '';
+            showContent: false;
+            this.$router.push({ name: 'Login'});
+        }
+    },
+
     mounted: function () {
         axios({
             method: 'get',
@@ -27,4 +42,4 @@ new Vue({
         });
     }
 
-}).$mount("#wrapper");
+}).$mount("#myapp");
