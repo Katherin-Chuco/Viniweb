@@ -28,7 +28,7 @@ new Vue({
     methods: {
         cerrarSesion: function () {
             this.token = '';
-            showContent: false;
+            this.showContent = false;
             this.$router.push({ name: 'Login'});
         }
     },
