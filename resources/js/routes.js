@@ -1,5 +1,6 @@
 import VueRouter from 'vue-router';
 
+import Base from './pages/Base'
 import Dashboard from './pages/Dashboard'
 import Temperature from "./pages/Temperature"
 import Humidity from "./pages/Humidity"
@@ -9,7 +10,7 @@ import Configurations from './pages/Configurations'
 import Notification from './pages/Notification'
 import Profile from './pages/Profile'
 import Login from './pages/Login'
-
+import Register from './pages/Register'
 
 
 const routes = [
@@ -57,6 +58,11 @@ const routes = [
         path: '/',
         name: 'Login',
         component: Login
+    },
+    {
+        path: '/registro',
+        name: 'Register',
+        component: Register
     }
 ];
 

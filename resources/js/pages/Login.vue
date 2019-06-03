@@ -19,8 +19,7 @@
                                     </div>
                                     <form class="user">
                                         <div class="form-group">
-                                            <input v-model="email" type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Correo electrónico"
-                                                   :class="{ 'has-error': this.emailError, 'has-success': this.emailCorrect }">
+                                            <input v-model="email" type="text" class="form-control form-control-user"  placeholder="Usuario">
 
                                         </div>
                                         <div class="form-group">
@@ -39,10 +38,10 @@
 
                                         <div v-if="showErrorEmail" class="help-section">{{ showErrorEmail }}</div>
                                     </form>
-                                    <!--<hr>
+                                    <hr>
                                     <div class="text-center">
-                                        <a class="small" href="register.html">Registrarse</a>
-                                    </div> -->
+                                        <router-link class="small" to="/registro">Resgistrarse</router-link>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -86,16 +85,14 @@
             },
 
             sendAuth: function () {
-                if (this.validateForm())
-                {
-                    if (this.email == "admin@gmail.com" && this.password == 'admin123' ) {
-                        this.$root.showContent = true;
-                        this.$root.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImNoZW1hbG9uc285NiIsIm5iZiI6MTU1ODczNzI0MiwiZXhwIjoxNTU4NzQwODQyLCJpYXQiOjE1NTg3MzcyNDIsImlzcyI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCIsImF1ZCI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCJ9.UFk-N6DEhYeR2OTHWFKkbm8CFcoiw1ENlGWpr-66meU";
 
-                        this.$router.push({ name: 'Dashboard'});
-                    } else {
-                        this.showErrorEmail = "No se pudo iniciar sesión. Por favor revise sus datos."
-                    }
+                if (this.email == "admin" && this.password == '123' ) {
+                    this.$root.showContent = true;
+                    this.$root.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImNoZW1hbG9uc285NiIsIm5iZiI6MTU1ODczNzI0MiwiZXhwIjoxNTU4NzQwODQyLCJpYXQiOjE1NTg3MzcyNDIsImlzcyI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCIsImF1ZCI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCJ9.UFk-N6DEhYeR2OTHWFKkbm8CFcoiw1ENlGWpr-66meU";
+
+                    this.$router.push({ name: 'Dashboard'});
+                } else {
+                    this.showErrorEmail = "No se pudo iniciar sesión. Por favor, revisa sus datos."
                 }
             }
         },
@@ -105,6 +102,8 @@
             if (this.$root.token !== "") {
                 this.$router.push({ name: 'Dashboard'});
             }
+
+
         }
     }
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container-fluid">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Humedad del Suelo</h1>
         </div>
@@ -13,7 +13,7 @@
                     <!-- Card Body -->
                     <div class="card-body">
                         <div class="chart-area">
-                            <two :datatemp="humidityDataG" :max="maxHumidityG" :datatempx="groundHumidityDatax"></two>
+                            <two :datatemp="humidityDataG" :max="maxHumidityG" :min="minHumidityG" :datatempx="groundHumidityDatax"></two>
                         </div>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                 climateHumidityDatax: [],
                 groundHumidityDatax: [],
                 maxHumidityG: 7000,
-                maxHumidityC: 6,
+                minHumidityG: 6,
 
             }
         },
@@ -53,7 +53,7 @@
             axios.get('medidas/humsuelo')
                 .then(response => {
                     // handle success
-                    console.log(response);
+                    console.log("Humedad Suelo",response);
                     var humTwo = [];
 
                     for (var i = 0; i < response.data.humsSuelo.length; i++) {
@@ -63,11 +63,26 @@
 
                     this.groundHumidityData = this.groundHumidityData.concat(humTwo);
                     this.humidityDataG.push(this.groundHumidityData);
+
+                    this.maxHumidityG = response.data.maxHum;
+                    this.minHumidityG = response.data.maxHum;
+
                 })
                 .catch(function (error) {
                     // handle error
                     console.log(error);
                 });
+
+            axios({
+                method: 'get',
+                url: 'defecto'
+            }).then(response => {
+                console.log('Defecto',response)
+
+                this.maxHumidityG = response.data[2].valormin;
+                this.maxHumidityG = response.data[2].valormax;
+
+            });
 
         }
 

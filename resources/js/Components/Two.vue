@@ -1,5 +1,5 @@
 <template>
-    <div id="chart" :datatemp="datatemp" :max="max" :datatempx="datatempx"> {{now}} </div>
+    <div id="chart" :datatemp="datatemp" :max="max" :min="min" :datatempx="datatempx"> {{now}} </div>
 </template>
 
 <script>
@@ -11,7 +11,8 @@
         props: {
           datatemp: Array,
           datatempx: Array,
-          max: Number
+          max: Number,
+            min: Number
         },
         computed: {
             now: function() {
@@ -30,7 +31,7 @@
                     },
                     grid: {
                         y: {
-                            lines: [{value: this.max}]
+                            lines: [{value: this.max}, {value: this.min}]
                         }
                     }
                 });

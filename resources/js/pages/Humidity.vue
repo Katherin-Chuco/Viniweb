@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container-fluid">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Humedad del Ambiente</h1>
         </div>
@@ -14,7 +14,7 @@
                     <!-- Card Body -->
                     <div class="card-body">
                         <div class="chart-area">
-                            <two :datatemp="humidityDataC" :max="maxHumidityC" :datatempx="climateHumidityDatax"></two>
+                            <two :datatemp="humidityDataC" :max="maxHumidityC" :min="minHumidityC" :datatempx="climateHumidityDatax"></two>
                         </div>
                     </div>
                 </div>
@@ -39,8 +39,8 @@
               humidityDataC: [],
               climateHumidityDatax: [],
               groundHumidityDatax: [],
-              maxHumidityG: 7000,
               maxHumidityC: 6,
+              minHumidityC: 0,
 
           }
         },
@@ -68,6 +68,17 @@
                     // handle error
                     console.log(error);
                 });
+
+            axios({
+                method: 'get',
+                url: 'defecto'
+            }).then(response => {
+                console.log('Defecto',response)
+
+                this.maxHumidityC = response.data[1].valormin;
+                this.minHumidityC = response.data[1].valormax;
+
+            });
 
         }
 

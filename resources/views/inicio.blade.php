@@ -148,7 +148,11 @@
         <!-- Custom scripts for all pages-->
         <script src="js/sb-admin-2.min.js"></script>
     </body>
+    <script>
+        var FORCE_SESSION = <?= json_encode($token)?>;
+    </script>
     <script src="/js/app.js"></script>
+
 
 
 </html>

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container-fluid">
 
         <div v-if="showMessageS" class="px-3 py-1 bg-success text-white d-flex flex-row align-items-center justify-content-between" >
             <p>{{messageS}} </p> <button @click="closeMessage" class="text-white"><p>X</p></button>
@@ -141,6 +141,10 @@
           }
         },
         mounted: function () {
+            if (this.$root.token === "") {
+                this.$router.push({ name: 'Login'});
+            }
+
             this.send();
         },
         methods: {
@@ -149,6 +153,7 @@
                     method: 'get',
                     url: 'defecto'
                 }).then(response => {
+                    console.log('Defecto',response)
 
                     this.ambMin = response.data[1].valormin;
                     this.ambMax = response.data[1].valormax;
@@ -161,6 +166,8 @@
             },
             save: function (id, max, min) {
 
+                console.log("maximo", max);
+
                 this.showS = false;
                 this.showA = false;
                 this.showT = false;
@@ -171,8 +178,8 @@
                     headers: { 'content-type': 'application/json' },
                     data: {
                         id: id,
-                        valormax: max,
-                        valormin: min
+                        max: max,
+                        min: min
                     }
                 }).then(response => {
 
@@ -212,12 +219,6 @@
             closeMessage: function () {
                 this.showMessageS = false;
                 this.showMessageE = false;
-            }
-        },
-        mounted() {
-
-            if (this.$root.token === "") {
-                this.$router.push({ name: 'Login'});
             }
         }
 

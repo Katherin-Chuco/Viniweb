@@ -1,6 +1,6 @@
 <template>
 
-    <div>
+    <div class="container-fluid">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Reportes</h1>
         </div>
@@ -108,6 +108,7 @@
                 objeto.start = new Date(this.time1).toLocaleDateString('en-US');
                 objeto.end = new Date(this.time2).toLocaleDateString('en-US');
 
+                console.log(new Date(this.time2).toLocaleDateString('en-US'));
                 let datos = JSON.stringify(objeto);
 
                 //http://192.168.43.2:8080/restapiv/dashboard
@@ -117,26 +118,6 @@
                     headers: { 'content-type': 'application/json' },
                     data: datos
                 }).then(response => {
-
-                    if(!response.data) {
-                        var prueba = {
-                            arregloHumS: [
-                                {id:1,valor:0.30,fecha:"2019-04-29T15:47:47.000+0000"},
-                                {id:2,valor:0.40,fecha:"2019-04-29T15:47:47.000+0000"},
-                                {id:3,valor:0.20,fecha:"2019-04-29T15:47:47.000+0000"}
-                            ]
-                            ,arregloHumA: [
-                                {id:1,valor:0.70,fecha:"2019-04-29T15:47:04.000+0000"},
-                                {id:2,valor:0.66,fecha:"2019-04-29T15:47:22.000+0000"},
-                                {id:3,valor:0.72,fecha:"2019-04-29T15:47:22.000+0000"}
-                            ],
-                            arregloTemp:[
-                                {id:1,valor:20.00,fecha:"2019-04-29T15:15:13.000+0000"},
-                                {id:2,valor:30.00,fecha:"2019-04-29T15:15:23.000+0000"},
-                                {id:3,valor:25.00,fecha:"2019-04-29T15:15:32.000+0000"}
-                            ]
-                        };
-                    }
 
 
                     if (this.selected === 'Humedad del ambiente') {
