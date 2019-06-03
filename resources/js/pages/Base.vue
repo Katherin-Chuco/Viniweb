@@ -8,7 +8,7 @@
             <hr class="sidebar-divider my-0">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <router-link class="nav-link" to="">
+                <router-link class="nav-link" to="/home">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span>
                 </router-link>
@@ -21,21 +21,21 @@
             </div>
 
             <li class="nav-item">
-                <router-link class="nav-link" to="suelo">
+                <router-link class="nav-link" to="/suelo">
                     <i class="fas fa-fw fa-chart-bar"></i>
                     <span>Humedad del Suelo</span>
                 </router-link>
             </li>
 
             <li class="nav-item">
-                <router-link class="nav-link" to="ambiente">
+                <router-link class="nav-link" to="/ambiente">
                     <i class="fas fa-fw fa-chart-bar"></i>
                     <span>Humedad del Ambiente</span>
                 </router-link>
             </li>
 
             <li class="nav-item">
-                <router-link class="nav-link" @click="goToTemperature" >
+                <router-link class="nav-link" to="/temperatura" >
                     <i class="fas fa-fw fa-temperature-low"></i>
                     <span>Temperatura</span>
                 </router-link>
@@ -44,7 +44,7 @@
             <hr class="sidebar-divider">
 
             <li class="nav-item">
-                <router-link class="nav-link" to="reportes">
+                <router-link class="nav-link" to="/reportes">
                     <i class="fas fa-fw fa-list-alt"></i>
                     <span>Reportes</span>
                 </router-link>
@@ -53,7 +53,7 @@
             <hr class="sidebar-divider">
 
             <li class="nav-item">
-                <router-link class="nav-link" to="configuraciones">
+                <router-link class="nav-link" to="/configuraciones">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Configuraciones</span>
                 </router-link>
@@ -72,7 +72,7 @@
                     <ul class="navbar-nav ml-auto">
 
                         <li class="nav-item dropdown no-arrow mx-1">
-                            <router-link class="nav-link dropdown-toggle" to="alertas">
+                            <router-link class="nav-link dropdown-toggle" to="/alertas">
                                 <i class="fas fa-bell fa-fw"></i>
                                 <!-- Counter - Alerts -->
                                 <span class="badge badge-danger badge-counter">3+</span>
