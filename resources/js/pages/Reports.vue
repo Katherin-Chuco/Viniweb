@@ -1,6 +1,11 @@
 <template>
 
     <div class="container-fluid">
+        <div v-if="errorMessage" class="px-3 py-1 bg-warning text-white d-flex flex-row align-items-center justify-content-between" >
+            <p>{{errorMessage}} </p> <button @click="closeMessage" class="text-white"><p>X</p></button>
+        </div>
+
+
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Reportes</h1>
         </div>
@@ -86,11 +91,20 @@
                 },
                 selected:'',
                 dataTable: [],
-                sensor: ''
+                sensor: '',
+                errorMessage: false,
             }
         },
         methods: {
             send: function () {
+                console.log(this.selected);
+
+                if (!this.selected || !this.time1 || !this.time2) {
+                    this.errorMessage = "Campos vacios, verifique que los campos hayan sido seleccionados.";
+                    return;
+                }
+
+
 
                 var id = 0;
                 if (this.selected === 'Humedad del ambiente') {
@@ -103,12 +117,19 @@
                     id = 3;
                 }
 
+                var timeOne = new Date(this.time1);
+                var timeTwo =new Date(this.time2);
+
+                if (timeOne.getTime() >= timeTwo.getTime()) {
+                    this.errorMessage = "La fecha fin no debe ser menor a la fecha inicio";
+                    return;
+                }
+
                 let objeto = {};
                 objeto.id = id;
                 objeto.start = new Date(this.time1).toLocaleDateString('en-US');
                 objeto.end = new Date(this.time2).toLocaleDateString('en-US');
 
-                console.log(new Date(this.time2).toLocaleDateString('en-US'));
                 let datos = JSON.stringify(objeto);
 
                 //http://192.168.43.2:8080/restapiv/dashboard
@@ -133,6 +154,9 @@
             },
             dateFormat: function (fecha) {
                 return new Date(fecha).toLocaleString()
+            },
+            closeMessage: function () {
+                this.errorMessage = false
             }
 
         },

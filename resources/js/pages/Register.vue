@@ -15,7 +15,7 @@
                             <form class="user">
 
                                 <div class="form-group">
-                                    <input v-model="username" type="text" class="form-control form-control-user" id="exampleLastName" placeholder="Usuario">
+                                    <input v-model="email" type="email" class="form-control form-control-user" id="exampleLastName" placeholder="Correo electrónico">
                                 </div>
                                 <!-- <div class="form-group">
                                     <input type="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="Correo electrónico">
@@ -29,16 +29,18 @@
                                </div>-->
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input v-model="passwordOne" type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                                        <input v-model="passwordOne" type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Contraseña">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input v-model="passwordTwo" type="password" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Repeat Password">
+                                        <input v-model="passwordTwo" type="password" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Repetir contraseña">
                                     </div>
                                 </div>
 
                                <button class="btn btn-primary btn-user btn-block" @click="saveUser">
                                    Registrarme
                                </button>
+
+                                <div v-if="showErrorEmail" class="help-section" style="margin-top: 10px; color:red;">{{ showErrorEmail }}</div>
                            </form>
                            <hr>
                            <!--  <div class="text-center">
@@ -62,15 +64,36 @@
           name: "Register",
           data: function () {
               return {
-                  username: '',
+                  email: '',
                   passwordOne: '',
-                  passwordTwo: ''
+                  passwordTwo: '',
+                  showErrorEmail: false
 
               }
           },
 
           methods: {
+              validateForm: function () {
+                  let emailValue = this.email;
+
+                  let expr = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|firstName|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
+                  if (emailValue === "" || !expr.test(emailValue)) {
+                      this.emailError = true;
+                      this.showErrorEmail = "Formato de correo electrónico incorrecto."
+                      return false;
+                  }
+                  this.emailError = false;
+                  this.emailCorrect = true;
+                  this.showErrorEmail = false;
+                  return true;
+              },
+
               saveUser: function () {
+
+                  if (!this.validateForm()) {
+                      return;
+                  }
+
                   if (this.passwordOne && this.passwordTwo && this.passwordOne === this.passwordTwo) {
 
                       axios({
@@ -78,11 +101,11 @@
                           url: 'registro',
                           headers: { 'content-type': 'application/json' },
                           data: {
-                              username: this.username,
+                              username: this.email,
                               password: this.passwordOne
-
                           }
                       }).then(response => {
+                          console.log(response)
                           this.$root.showContent = true;
                           this.$root.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImNoZW1hbG9uc285NiIsIm5iZiI6MTU1ODczNzI0MiwiZXhwIjoxNTU4NzQwODQyLCJpYXQiOjE1NTg3MzcyNDIsImlzcyI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCIsImF1ZCI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCJ9.UFk-N6DEhYeR2OTHWFKkbm8CFcoiw1ENlGWpr-66meU";
 
@@ -94,6 +117,8 @@
                           // handle error
                           console.log(error);
                       });
+                  } else {
+                      this.showErrorEmail = "*Completar correctamente todos los campos."
                   }
               }
           }

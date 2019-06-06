@@ -23,22 +23,22 @@
                             <tbody>
                             <tr>
                                 <td>Temperatura</td>
-                                <td>2011/04/25</td>
+                                <td>2019/04/25</td>
                                 <td>80</td>
                             </tr>
                             <tr>
                                 <td>Temperatura</td>
-                                <td>2011/07/25</td>
+                                <td>2019/04/25</td>
                                 <td>75</td>
                             </tr>
                             <tr>
                                 <td>Temperatura</td>
-                                <td>2009/01/12</td>
+                                <td>2019/05/12</td>
                                 <td>86</td>
                             </tr>
                             <tr>
                                 <td>Temperatura</td>
-                                <td>2012/03/29</td>
+                                <td>2019/05/29</td>
                                 <td>43</td>
                             </tr>
 
@@ -60,50 +60,54 @@
                 alertTable: []
             }
         },
+        methods: {
+            dateFormat: function (fecha) {
+                return new Date(fecha).toLocaleString()
+            },
+        },
         mounted: function () {
 
             if (this.$root.token === "") {
                 this.$router.push({ name: 'Login'});
             }
 
-            axios({
-                method: 'get',
-                url: '/prueba/reportes'
-            }).then(response => {
+           // axios({
+           //     method: 'get',
+           //     url: '/prueba/reportes'
+           // }).then(response => {
                 var dataPrueba = {
                     arregloHumS: [
-                        {id:1,valor:0.30,fecha:"2019-04-29T15:47:47.000+0000"},
-                        {id:2,valor:0.40,fecha:"2019-04-29T15:47:47.000+0000"},
-                        {id:3,valor:0.20,fecha:"2019-04-29T15:47:47.000+0000"}
+                        {id:1,valor:0.30,fecha:"2019-04-29 3:47 p.m."},
+                        {id:2,valor:0.40,fecha:"2019-04-30 10:00 a.m."},
+                        {id:3,valor:0.20,fecha:"2019-05-15 1:15 p.m."}
                     ]
                     ,arregloHumA:
                         [
-                            {id:1,valor:0.70,fecha:"2019-04-29T15:47:04.000+0000"},
-                            {id:2,valor:0.66,fecha:"2019-04-29T15:47:22.000+0000"},
-                            {id:3,valor:0.72,fecha:"2019-04-29T15:47:22.000+0000"}
+                            {id:1,valor:0.70,fecha:"2019-05-10 3:20 a.m."},
+                            {id:2,valor:0.66,fecha:"2019-05-15 4:44 p.m."},
+                            {id:3,valor:0.72,fecha:"2019-05-23 8:00 p.m."}
                         ],
                     arregloTemp:[
-                        {id:1,valor:20.00,fecha:"2019-04-29T15:15:13.000+0000"},
-                        {id:2,valor:30.00,fecha:"2019-04-29T15:15:23.000+0000"},
-                        {id:3,valor:25.00,fecha:"2019-04-29T15:15:32.000+0000"}
+                        {id:1,valor:20.00,fecha:"2019-04-20 5:00 p.m."},
+                        {id:2,valor:30.00,fecha:"2019-05-14 9:00 p.m."},
+                        {id:3,valor:25.00,fecha:"2019-05-19 5:00 p.m."}
                     ]
                 };
 
                 if (dataPrueba.arregloHumA && (dataPrueba.arregloHumA.length > 0) ) {
                     //for(var i = 0; i < dataPrueba.arregloHumA.length; i++) {}
-                    this.dataTable.concat(dataPrueba.arregloHumA);
+                    this.alertTable.concat(dataPrueba.arregloHumA);
 
                 } else if (dataPrueba.arregloHumS && (dataPrueba.arregloHumS.length > 0)) {
                     //for(var i = 0; i < dataPrueba.data.arregloHumS.length; i++) {}
-                    this.dataTable.concat(dataPrueba.arregloHumS);
+                    this.alertTable.concat(dataPrueba.arregloHumS);
 
                 } else if (dataPrueba.arregloTemp && (dataPrueba.arregloHumA.arregloTemp > 0)) {
                     //for(var i = 0; i < dataPrueba.data.arregloTemp.length; i++) {}
-                    this.dataTable.concat(dataPrueba.arregloTemp);
+                    this.alertTable.concat(dataPrueba.arregloTemp);
                 }
 
-                console.log(response);
-            });
+          //  });
         },
     }
 </script>

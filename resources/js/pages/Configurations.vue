@@ -115,6 +115,40 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-lg-4">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Intervalo de medición</h6>
+                        <div class="dropdown no-arrow">
+                            <button @click="editI" class="dropdown-toggle" href="#" role="button">
+                                <i class="fas fa-edit fa-sm fa-fw text-gray-400"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="pt-1 flex-col">
+                            <label>Intervalo: </label>
+                            <label v-if="showI">Configura el intervalo:</label>
+                            <select class="custom-select custom-select-sm" v-model="rango" :disabled="!showI">
+                                <option disabled value=""> -- </option>
+                                <option value="15">Cada 15 minutos</option>
+                                <option value="30">Cada 30 minutos.</option>
+                                <option value="60">Cada hora</option>
+                            </select>
+                        </div>
+
+                        <br/>
+                        <button v-if="showI" @click="cancelI" class="btn btn-primary btn-block rounded-full text-white font-bold" >
+                            Cancelar
+                        </button>
+                        <button v-if="showI" @click="save(5, rango, 0)" class="btn btn-primary btn-block rounded-full text-white font-bold" >
+                            Guardar
+                        </button>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -127,6 +161,7 @@
               showS: false,
               showA: false,
               showT: false,
+              showI: false,
               ambMin: 0,
               sueMin: 0,
               tempMin: 0,
@@ -137,6 +172,8 @@
               messageE: "",
               showMessageS: false,
               showMessageE: false,
+
+              rango: 15,
 
           }
         },
@@ -161,12 +198,21 @@
                     this.sueMax = response.data[2].valormax;
                     this.tempMin = response.data[0].valormin;
                     this.tempMax = response.data[0].valormax;
+                    this.rango = response.data[3].valormax
 
+                }).catch( error => {
+                    this.ambMin = 0;
+                    this.ambMax = 0;
+                    this.sueMin = 0;
+                    this.sueMax = 0;
+                    this.tempMin = 0;
+                    this.tempMax = 0;
+                    this.rango = 15
                 });
             },
             save: function (id, max, min) {
 
-                console.log("maximo", max);
+                console.log('rango',max);
 
                 this.showS = false;
                 this.showA = false;
@@ -202,6 +248,9 @@
             editT: function () {
                 this.showT = true;
             },
+            editI: function () {
+                this.showI = true;
+            },
 
             cancelS: function () {
                 this.showS = false;
@@ -213,6 +262,10 @@
             },
             cancelT: function () {
                 this.showT = false;
+                this.send()
+            },
+            cancelI: function () {
+                this.showI = false;
                 this.send()
             },
 

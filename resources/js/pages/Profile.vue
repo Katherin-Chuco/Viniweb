@@ -6,28 +6,30 @@
 
         <div class="mb-10">
             <div class="card-header flex justify-between items-center">
-                <p>Configura tu correo electronico: </p>
+                <p>Configura tu contraseña: </p>
 
             </div>
 
             <div class="block shadow flex-row mb-6 bg-white" style="padding: 30px; margin-top: 10px; height: 500px">
-                <form>
-                    <div>
-                        <h4>Mis datos:</h4>
-                        <div>
-                            <div class="pt-4 flex-col">
-                                <label>Correo electrónico:</label>
-                                <input type="text" class="ml-4 border-2">
+
+                    <form class="user">
+
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                <input v-model="passwordOne" type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Contraseña">
+                            </div>
+                            <div class="col-sm-6">
+                                <input v-model="passwordTwo" type="password" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Repetir contraseña">
                             </div>
                         </div>
-                    </div>
 
-                    <div class="flex-col float-left mt-10 ">
-                        <a href="#" class="border border-grey px-8 py-2 rounded-full text-white font-bold text-xs bg-blue-light ml-16" >
-                            Guardar
-                        </a>
-                    </div>
-                </form>
+                        <button class="btn btn-primary btn-user btn-block" @click="saveUser">
+                            Guardar cambios
+                        </button>
+
+                        <div v-if="showErrorEmail" class="help-section" style="margin-top: 10px; color:red;">{{ showErrorEmail }}</div>
+                    </form>
+
 
 
             </div>
@@ -38,6 +40,23 @@
 <script>
     export default {
         name: "Profile",
+        data: function () {
+          return {
+              passwordOne: '',
+              passwordTwo: '',
+              showErrorEmail: false
+          }
+        },
+        methods: {
+            saveUser: function () {
+                if (this.passwordOne && this.passwordTwo && this.passwordOne === this.passwordTwo) {
+
+
+                } else {
+                    this.showErrorEmail = "*Completar todos los campos."
+                }
+            }
+        },
 
         mounted() {
 
@@ -47,7 +66,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>

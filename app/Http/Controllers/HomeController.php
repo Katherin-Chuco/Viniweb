@@ -14,7 +14,7 @@ class HomeController extends Controller
         if ($request->hasCookie('viniweb')) {
             $token = getForceSessionData($request->cookie('viniweb'));
             if ($token !== '') {
-                return view('welcome', compact('token'));
+                return view('inicio', compact('token'));
             }
         }
         return response(view('inicio', compact('token')))->withCookie(new Cookie('viniweb', '', -1));

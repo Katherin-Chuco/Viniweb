@@ -19,7 +19,7 @@
                                     </div>
                                     <form class="user">
                                         <div class="form-group">
-                                            <input v-model="email" type="text" class="form-control form-control-user"  placeholder="Usuario">
+                                            <input v-model="email" type="email" class="form-control form-control-user"  placeholder="Usuario">
 
                                         </div>
                                         <div class="form-group">
@@ -36,7 +36,7 @@
                                             Iniciar Sesión
                                         </button>
 
-                                        <div v-if="showErrorEmail" class="help-section">{{ showErrorEmail }}</div>
+                                        <div v-if="showErrorEmail" class="help-section" style="margin-top: 10px; color:red;">{{ showErrorEmail }}</div>
                                     </form>
                                     <hr>
                                     <div class="text-center">
@@ -86,19 +86,42 @@
 
             sendAuth: function () {
 
-                if (this.email == "admin" && this.password == '123' ) {
-                    this.$root.showContent = true;
-                    this.$root.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImNoZW1hbG9uc285NiIsIm5iZiI6MTU1ODczNzI0MiwiZXhwIjoxNTU4NzQwODQyLCJpYXQiOjE1NTg3MzcyNDIsImlzcyI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCIsImF1ZCI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCJ9.UFk-N6DEhYeR2OTHWFKkbm8CFcoiw1ENlGWpr-66meU";
+               // if ( this.validateForm && this.email == "admin@gmail.com" && this.password == 'admin123' ) {
 
-                    this.$router.push({ name: 'Dashboard'});
-                } else {
-                    this.showErrorEmail = "No se pudo iniciar sesión. Por favor, revisa sus datos."
-                }
+
+                    axios({
+                        method: 'post',
+                        url: 'login',
+                        headers: { 'content-type': 'application/json' },
+                        data: {
+                            username: this.email,
+                            password: this.password
+                        }
+                    }).then(response => {
+
+                        if (response.data) {
+                            this.$root.showContent = true;
+                            this.$root.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImNoZW1hbG9uc285NiIsIm5iZiI6MTU1ODczNzI0MiwiZXhwIjoxNTU4NzQwODQyLCJpYXQiOjE1NTg3MzcyNDIsImlzcyI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCIsImF1ZCI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCJ9.UFk-N6DEhYeR2OTHWFKkbm8CFcoiw1ENlGWpr-66meU";
+
+                            FORCE_SESSION = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImNoZW1hbG9uc285NiIsIm5iZiI6MTU1ODczNzI0MiwiZXhwIjoxNTU4NzQwODQyLCJpYXQiOjE1NTg3MzcyNDIsImlzcyI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCIsImF1ZCI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCJ9.UFk-N6DEhYeR2OTHWFKkbm8CFcoiw1ENlGWpr-66meU";
+
+                            this.$router.push({ name: 'Dashboard'});
+                        }
+
+
+                    }).catch(function (error) {
+                        this.showErrorEmail = "* Username o contraseña incorrectos."
+                    });
+
+               // } else {
+               //     this.showErrorEmail = "* Username o contraseña incorrectos."
+               // }
             }
         },
 
         mounted() {
 
+            console.log(FORCE_SESSION);
             if (this.$root.token !== "") {
                 this.$router.push({ name: 'Dashboard'});
             }
