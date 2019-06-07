@@ -86,35 +86,35 @@
 
             sendAuth: function () {
 
-                if ( this.validateForm && this.email == "admin@gmail.com" && this.password == 'admin123' ) {
-
-                    this.$root.showContent = true;
-                    this.$root.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImNoZW1hbG9uc285NiIsIm5iZiI6MTU1ODczNzI0MiwiZXhwIjoxNTU4NzQwODQyLCJpYXQiOjE1NTg3MzcyNDIsImlzcyI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCIsImF1ZCI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCJ9.UFk-N6DEhYeR2OTHWFKkbm8CFcoiw1ENlGWpr-66meU";
-
-                    FORCE_SESSION = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImNoZW1hbG9uc285NiIsIm5iZiI6MTU1ODczNzI0MiwiZXhwIjoxNTU4NzQwODQyLCJpYXQiOjE1NTg3MzcyNDIsImlzcyI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCIsImF1ZCI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCJ9.UFk-N6DEhYeR2OTHWFKkbm8CFcoiw1ENlGWpr-66meU";
-
-                    this.$router.push({ name: 'Dashboard'});
-
-                    //axios({
-                    //    method: 'post',
-                    //    url: 'login',
-                    //    headers: { 'content-type': 'application/json' },
-                    //    data: {
-                    //        username: this.email,
-                    //        password: this.password
-                    //    }
-                    //}).then(response => {
+               // if ( this.validateForm && this.email == "admin@gmail.com" && this.password == 'admin123' ) {
 
 
 
+                    axios({
+                        method: 'post',
+                        url: 'login',
+                        headers: { 'content-type': 'application/json' },
+                        data: {
+                            username: this.email,
+                            password: this.password
+                        }
+                    }).then(response => {
+                        this.$root.showContent = true;
+                        this.$root.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImNoZW1hbG9uc285NiIsIm5iZiI6MTU1ODczNzI0MiwiZXhwIjoxNTU4NzQwODQyLCJpYXQiOjE1NTg3MzcyNDIsImlzcyI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCIsImF1ZCI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCJ9.UFk-N6DEhYeR2OTHWFKkbm8CFcoiw1ENlGWpr-66meU";
 
-                    //}).catch(function (error) {
-                    //    this.showErrorEmail = "* Username o contraseña incorrectos."
-                    //});
+                        FORCE_SESSION = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImNoZW1hbG9uc285NiIsIm5iZiI6MTU1ODczNzI0MiwiZXhwIjoxNTU4NzQwODQyLCJpYXQiOjE1NTg3MzcyNDIsImlzcyI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCIsImF1ZCI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCJ9.UFk-N6DEhYeR2OTHWFKkbm8CFcoiw1ENlGWpr-66meU";
 
-                } else {
-                    this.showErrorEmail = "* Username o contraseña incorrectos."
-                }
+                        this.$router.push({ name: 'Dashboard'});
+
+
+
+                    }).catch(function (error) {
+                        this.showErrorEmail = "* Username o contraseña incorrectos."
+                    });
+
+                //} else {
+               //     this.showErrorEmail = "* Username o contraseña incorrectos."
+               // }
             }
         },
 

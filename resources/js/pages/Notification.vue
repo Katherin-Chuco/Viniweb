@@ -24,22 +24,17 @@
                             <tr>
                                 <td>Temperatura</td>
                                 <td>2019/04/25</td>
-                                <td>80</td>
+                                <td>35ºC</td>
                             </tr>
                             <tr>
                                 <td>Temperatura</td>
                                 <td>2019/04/25</td>
-                                <td>75</td>
+                                <td>40ºC</td>
                             </tr>
                             <tr>
                                 <td>Temperatura</td>
                                 <td>2019/05/12</td>
-                                <td>86</td>
-                            </tr>
-                            <tr>
-                                <td>Temperatura</td>
-                                <td>2019/05/29</td>
-                                <td>43</td>
+                                <td>38ºC</td>
                             </tr>
 
                             </tbody>

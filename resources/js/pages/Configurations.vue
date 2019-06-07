@@ -38,6 +38,10 @@
                             <label>Valor máximo:</label>
                             <input v-model.number="ambMax" type="number" class="ml-1 border-2" :disabled="!showA">
                         </div>
+                        <div class="pt-4 flex-row">
+                            <label>Activar notificaciones</label>
+                            <input v-model.number="activoA" type="checkbox" class="ml-1 border-2" :disabled="!showA">
+                        </div>
 
                         <br/>
                         <button v-if="showA" @click="cancelA"  class="btn btn-primary btn-block rounded-full text-white font-bold " >
@@ -71,6 +75,10 @@
                             <label>Valor máximo:</label>
                             <input v-model.number="sueMax" type="number" class="ml-1 border-2" :disabled="!showS">
                         </div>
+                        <div class="pt-4 flex-row">
+                            <label>Activar notificaciones</label>
+                            <input v-model.number="activoS" type="checkbox" class="ml-1 border-2" :disabled="!showS">
+                        </div>
 
                         <br/>
                         <button v-if="showS" @click="cancelS" class="btn btn-primary btn-block rounded-full text-white font-bold">
@@ -102,6 +110,10 @@
                         <div class="pt-4 flex-col">
                             <label>Valor máximo:</label>
                             <input v-model.number="tempMax" type="number" class="ml-1 border-2" :disabled="!showT"> ºC
+                        </div>
+                        <div class="pt-4 flex-row">
+                            <label>Activar notificaciones</label>
+                            <input v-model.number="activoT" type="checkbox" class="ml-1 border-2" :disabled="!showT">
                         </div>
 
                         <br/>
@@ -172,6 +184,10 @@
               messageE: "",
               showMessageS: false,
               showMessageE: false,
+              activoA: true,
+              activoS: true,
+              activoT: true,
+
 
               rango: 15,
 
