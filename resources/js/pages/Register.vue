@@ -98,24 +98,22 @@
 
                       axios({
                           method: 'post',
-                          url: 'registro',
+                          url: 'registronuevo',
                           headers: { 'content-type': 'application/json' },
                           data: {
                               username: this.email,
                               password: this.passwordOne
                           }
                       }).then(response => {
-                          console.log(response)
                           this.$root.showContent = true;
                           this.$root.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImNoZW1hbG9uc285NiIsIm5iZiI6MTU1ODczNzI0MiwiZXhwIjoxNTU4NzQwODQyLCJpYXQiOjE1NTg3MzcyNDIsImlzcyI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCIsImF1ZCI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCJ9.UFk-N6DEhYeR2OTHWFKkbm8CFcoiw1ENlGWpr-66meU";
 
                           this.$router.push({ name: 'Dashboard'});
 
-                          console.log('Success')
 
                       }).catch(function (error) {
                           // handle error
-                          console.log(error);
+                          console.log(error.response);
                       });
                   } else {
                       this.showErrorEmail = "*Completar correctamente todos los campos."

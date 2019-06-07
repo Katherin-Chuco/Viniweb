@@ -225,6 +225,7 @@
                 this.showS = false;
                 this.showA = false;
                 this.showT = false;
+                this.showI = false;
 
                 axios({
                     method: 'post',

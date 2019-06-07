@@ -40,7 +40,7 @@
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <router-link class="small" to="/registro">Resgistrarse</router-link>
+                                        <router-link class="small" to="/registro">Registrarse</router-link>
                                     </div>
                                 </div>
                             </div>
@@ -86,8 +86,7 @@
 
             sendAuth: function () {
 
-               // if ( this.validateForm && this.email == "admin@gmail.com" && this.password == 'admin123' ) {
-
+                //if ( this.validateForm && this.email == "admin@gmail.com" && this.password == 'admin123' ) {
 
 
                     axios({
@@ -99,20 +98,24 @@
                             password: this.password
                         }
                     }).then(response => {
-                        this.$root.showContent = true;
-                        this.$root.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImNoZW1hbG9uc285NiIsIm5iZiI6MTU1ODczNzI0MiwiZXhwIjoxNTU4NzQwODQyLCJpYXQiOjE1NTg3MzcyNDIsImlzcyI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCIsImF1ZCI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCJ9.UFk-N6DEhYeR2OTHWFKkbm8CFcoiw1ENlGWpr-66meU";
+                        if (response.data) {
+                            this.$root.showContent = true;
+                            this.$root.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImNoZW1hbG9uc285NiIsIm5iZiI6MTU1ODczNzI0MiwiZXhwIjoxNTU4NzQwODQyLCJpYXQiOjE1NTg3MzcyNDIsImlzcyI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCIsImF1ZCI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCJ9.UFk-N6DEhYeR2OTHWFKkbm8CFcoiw1ENlGWpr-66meU";
 
-                        FORCE_SESSION = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImNoZW1hbG9uc285NiIsIm5iZiI6MTU1ODczNzI0MiwiZXhwIjoxNTU4NzQwODQyLCJpYXQiOjE1NTg3MzcyNDIsImlzcyI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCIsImF1ZCI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCJ9.UFk-N6DEhYeR2OTHWFKkbm8CFcoiw1ENlGWpr-66meU";
+                            FORCE_SESSION = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImNoZW1hbG9uc285NiIsIm5iZiI6MTU1ODczNzI0MiwiZXhwIjoxNTU4NzQwODQyLCJpYXQiOjE1NTg3MzcyNDIsImlzcyI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCIsImF1ZCI6Imh0dHA6Ly82NC4yMDIuMTg2LjIxNS9BUElNZWthV2FzaCJ9.UFk-N6DEhYeR2OTHWFKkbm8CFcoiw1ENlGWpr-66meU";
 
-                        this.$router.push({ name: 'Dashboard'});
+                            this.$router.push({ name: 'Dashboard'});
+                        } else {
+                            this.showErrorEmail = "* Username o contraseña incorrectos."
+                        }
 
 
 
                     }).catch(function (error) {
-                        this.showErrorEmail = "* Username o contraseña incorrectos."
+                        this.showErrorEmail = "Ocurrio un error de conexión."
                     });
 
-                //} else {
+               // } else {
                //     this.showErrorEmail = "* Username o contraseña incorrectos."
                // }
             }
