@@ -156,9 +156,3 @@
 
 
 </html>
-<script>
-    import Login from "../js/pages/Login";
-    export default {
-        components: {Login}
-    }
-</script>

@@ -200,15 +200,7 @@
                     this.tempMax = response.data[0].valormax;
                     this.rango = response.data[3].valormax
 
-                }).catch( error => {
-                    this.ambMin = 0;
-                    this.ambMax = 0;
-                    this.sueMin = 0;
-                    this.sueMax = 0;
-                    this.tempMin = 0;
-                    this.tempMax = 0;
-                    this.rango = 15
-                });
+                })
             },
             save: function (id, max, min) {
 
