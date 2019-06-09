@@ -46,19 +46,32 @@
         },
         mounted() {
 
-            console.log(FORCE_SESSION);
+            //console.log(FORCE_SESSION);
             if (this.$root.token === "") {
                 this.$router.push({ name: 'Login'});
             }
+
+            let objeto = {};
+            objeto.id = 1;
+
+            objeto.start = "30/04/2019";
+
+            var fin = new Date(this.time2);
+            //objeto.end = ""+fin.getDate() + "/"+(fin.getMonth()+1) + "/" +fin.getFullYear();
+            objeto.end= "08/12/2019";
+
+            let datos = JSON.stringify(objeto);
+
+            //console.log('datos', datos);
 
             axios({
                 method: 'post',
                 url: 'dashboard',
                 headers: { 'content-type': 'application/json' },
-                data: {}
+                data: datos
             }).then(response => {
                     // handle success
-                    console.log(response);
+                    //console.log(response);
                     var temp = [];
                     var dateTem = [];
                     var dateCli = [];
@@ -97,7 +110,7 @@
                 })
                 .catch(function (error) {
                     // handle error
-                    console.log(error);
+                    console.log(error.response);
                 });
 
         }

@@ -34,10 +34,14 @@
                             <label>Valor mínimo: </label>
                             <input v-model.number="ambMin" type="number" class="ml-1 border-2" :disabled="!showA">
                         </div>
+                        <span v-if="errorAmin" style="color: red; font-size: 12px">{{ errorAmin}}</span>
+
                         <div class="pt-4 flex-col">
                             <label>Valor máximo:</label>
                             <input v-model.number="ambMax" type="number" class="ml-1 border-2" :disabled="!showA">
                         </div>
+                        <span v-if="errorAmax" style="color: red; font-size: 12px">{{errorAmax}}</span>
+
                         <div class="pt-4 flex-row">
                             <label>Activar notificaciones</label>
                             <input v-model.number="activoA" type="checkbox" class="ml-1 border-2" :disabled="!showA">
@@ -71,10 +75,14 @@
                             <label>Valor mínimo: </label>
                             <input v-model.number="sueMin" type="number" class="ml-1 border-2" :disabled="!showS">
                         </div>
+                        <span v-if="errorSmin" style="color: red; font-size: 12px">{{errorSmin}}</span>
+
                         <div class="pt-4 flex-col">
                             <label>Valor máximo:</label>
                             <input v-model.number="sueMax" type="number" class="ml-1 border-2" :disabled="!showS">
                         </div>
+                        <span v-if="errorSmax" style="color: red; font-size: 12px">{{errorSmax}}</span>
+
                         <div class="pt-4 flex-row">
                             <label>Activar notificaciones</label>
                             <input v-model.number="activoS" type="checkbox" class="ml-1 border-2" :disabled="!showS">
@@ -107,14 +115,20 @@
                             <label>Valor mínimo: </label>
                             <input v-model.number="tempMin" type="number" class="ml-1 border-2" :disabled="!showT"> ºC
                         </div>
+                        <span v-if="errorTmin" style="color: red; font-size: 12px">{{errorTmin}}</span>
+
                         <div class="pt-4 flex-col">
                             <label>Valor máximo:</label>
                             <input v-model.number="tempMax" type="number" class="ml-1 border-2" :disabled="!showT"> ºC
                         </div>
+                        <span v-if="errorTmax" style="color: red; font-size: 12px">{{errorTmax}}</span>
+
+
                         <div class="pt-4 flex-row">
                             <label>Activar notificaciones</label>
                             <input v-model.number="activoT" type="checkbox" class="ml-1 border-2" :disabled="!showT">
                         </div>
+
 
                         <br/>
                         <button v-if="showT" @click="cancelT" class="btn btn-primary btn-block rounded-full text-white font-bold" >
@@ -188,6 +202,13 @@
               activoS: true,
               activoT: true,
 
+              errorAmin: false,
+              errorAmax: false,
+              errorSmax: false,
+              errorSmin: false,
+              errorTmax: false,
+              errorTmin: false,
+
 
               rango: 15,
 
@@ -208,29 +229,100 @@
                     method: 'get',
                     url: 'defecto'
                 }).then(response => {
-                    //console.log('Defecto',response)
+                    console.log('Defecto',response);
 
                     this.ambMin = response.data[1].valormin;
                     this.ambMax = response.data[1].valormax;
                     this.activoA = response.data[1].act;
                     this.sueMin = response.data[2].valormin;
                     this.sueMax = response.data[2].valormax;
-                    this.activoS = response.data[1].act;
+                    this.activoS = response.data[2].act;
                     this.tempMin = response.data[0].valormin;
                     this.tempMax = response.data[0].valormax;
-                    this.activoT = response.data[1].act;
+                    this.activoT = response.data[0].act;
                     this.rango = response.data[3].valormax
 
                 })
             },
             save: function (id, max, min, activo) {
 
-               // console.log('rango',max);
+                //console.log('rango',max);
+                var messageVacio = "*El campo no debe estar vacío.";
+                var messageFuera = "*Rango no permitido";
 
-                if (!max || !min) {
-                    this.messageE= "Ingrese el campo vacío.";
-                    this.showMessageE= true;
+                this.errorAmin= false;
+                this.errorAmax= false;
+                this.errorSmax= false;
+                this.errorSmin= false;
+                this.errorTmax= false;
+                this.errorTmin= false;
+
+                var ningunerror = true;
+
+                if (!max) {
+
+                    if (id == 1) {
+
+                        this.errorTmax = messageVacio
+                    } else if( id == 2) {
+                        this.errorAmax = messageVacio
+                    } else if( id == 3) {
+                        this.errorSmax = messageVacio
+
+                    }
+                    ningunerror= false;
                 }
+
+                if(!min) {
+                    if (id == 1) {
+                        this.errorTmin = messageVacio
+                    } else if( id == 2) {
+                        this.errorAmin = messageVacio
+
+                    } else if( id == 3) {
+                        this.errorSmin = messageVacio
+                    }
+                    ningunerror= false;
+                }
+
+                if(max < -40 || max > 80 ) {
+                    if (id == 1) {
+                        this.errorTmax = messageFuera;
+
+                    } else if( id === 2) {
+                        this.errorAmax = messageFuera;
+
+                    } else if( id === 3) {
+                        this.errorSmax = messageFuera;
+
+                    }
+                    ningunerror= false;
+                }
+
+                if(min < -40 || min > 80 ) {
+                    if (id === 1) {
+                        this.errorTmin = messageFuera;
+
+                    } else if( id === 2) {
+                        this.errorAmin = messageFuera;
+
+                    } else if( id === 3) {
+                        this.errorSmin = messageFuera;
+
+                    }
+                    ningunerror= false;
+                }
+
+                if(!ningunerror) {
+                    return;
+                }
+
+                this.errorAmin= false;
+                this.errorAmax= false;
+                this.errorSmax= false;
+                this.errorSmin= false;
+                this.errorTmax= false;
+                this.errorTmin= false;
 
                 this.showS = false;
                 this.showA = false;

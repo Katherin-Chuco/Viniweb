@@ -86,8 +86,7 @@
 
             sendAuth: function () {
 
-                //if ( this.validateForm && this.email == "admin@gmail.com" && this.password == 'admin123' ) {
-
+               // if ( this.validateForm && this.email == "admin@gmail.com" && this.password == '123' ) {
 
                     axios({
                         method: 'post',
@@ -115,9 +114,9 @@
                         this.showErrorEmail = "Ocurrio un error de conexión."
                     });
 
-               // } else {
-               //     this.showErrorEmail = "* Username o contraseña incorrectos."
-               // }
+                //} else {
+                //    this.showErrorEmail = "* Username o contraseña incorrectos."
+              // }
             }
         },
 

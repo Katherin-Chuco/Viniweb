@@ -97,7 +97,7 @@
         },
         methods: {
             send: function () {
-                console.log(this.selected);
+
 
                 if (!this.selected || !this.time1 || !this.time2) {
                     this.errorMessage = "Campos vacios, verifique que los campos hayan sido seleccionados.";
@@ -127,10 +127,19 @@
 
                 let objeto = {};
                 objeto.id = id;
-                objeto.start = new Date(this.time1).toLocaleDateString('en-US');
-                objeto.end = new Date(this.time2).toLocaleDateString('en-US');
+                var inicio = new Date(this.time1);
+                var day1 = inicio.getDate() < 10 ? "0"+inicio.getDate() : ""+inicio.getDate();
+                var mes1 = inicio.getMonth()+1 < 10 ? ("0"+(inicio.getMonth()+1)) : ""+(inicio.getMonth()+1);
+                objeto.start = ""+day1 + "/"+mes1 + "/" +inicio.getFullYear();
+
+                var fin = new Date(this.time2);
+                var day2 = fin.getDate() < 10 ? "0"+fin.getDate() : ""+fin.getDate();
+                var mes2 = fin.getMonth()+1 < 10 ? ("0"+(fin.getMonth()+1)) : ""+(fin.getMonth()+1);
+                objeto.end = ""+day2 + "/"+ mes2 + "/" +fin.getFullYear();
 
                 let datos = JSON.stringify(objeto);
+
+                //console.log('datos', datos);
 
                 //http://192.168.43.2:8080/restapiv/dashboard
                 axios({
@@ -140,7 +149,7 @@
                     data: datos
                 }).then(response => {
 
-
+                    //console.log('dashboard respuesta',response);
                     if (this.selected === 'Humedad del ambiente') {
                         this.dataTable = response.data.arregloHumA;
 
