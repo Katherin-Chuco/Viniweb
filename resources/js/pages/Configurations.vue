@@ -47,7 +47,7 @@
                         <button v-if="showA" @click="cancelA"  class="btn btn-primary btn-block rounded-full text-white font-bold " >
                             Cancelar
                         </button>
-                        <button v-if="showA" @click="save(2, ambMax, ambMin)" class=" btn btn-primary btn-block rounded-full text-white font-bold " >
+                        <button v-if="showA" @click="save(2, ambMax, ambMin, activoA)" class=" btn btn-primary btn-block rounded-full text-white font-bold " >
                             Guardar
                         </button>
 
@@ -84,7 +84,7 @@
                         <button v-if="showS" @click="cancelS" class="btn btn-primary btn-block rounded-full text-white font-bold">
                             Cancelar
                         </button>
-                        <button v-if="showS" @click="save(3, sueMax, sueMin)" class="btn btn-primary btn-block rounded-full text-white font-bold">
+                        <button v-if="showS" @click="save(3, sueMax, sueMin,activoS )" class="btn btn-primary btn-block rounded-full text-white font-bold">
                             Guardar
                         </button>
                     </div>
@@ -120,7 +120,7 @@
                         <button v-if="showT" @click="cancelT" class="btn btn-primary btn-block rounded-full text-white font-bold" >
                             Cancelar
                         </button>
-                        <button v-if="showT" @click="save(1, tempMax, tempMin)" class="btn btn-primary btn-block rounded-full text-white font-bold" >
+                        <button v-if="showT" @click="save(1, tempMax, tempMin, activoT)" class="btn btn-primary btn-block rounded-full text-white font-bold" >
                             Guardar
                         </button>
 
@@ -154,7 +154,7 @@
                         <button v-if="showI" @click="cancelI" class="btn btn-primary btn-block rounded-full text-white font-bold" >
                             Cancelar
                         </button>
-                        <button v-if="showI" @click="save(5, rango, 0)" class="btn btn-primary btn-block rounded-full text-white font-bold" >
+                        <button v-if="showI" @click="save(5, rango, 0, false)" class="btn btn-primary btn-block rounded-full text-white font-bold" >
                             Guardar
                         </button>
 
@@ -202,25 +202,35 @@
         },
         methods: {
             send: function () {
+
+
                 axios({
                     method: 'get',
                     url: 'defecto'
                 }).then(response => {
-                    console.log('Defecto',response)
+                    //console.log('Defecto',response)
 
                     this.ambMin = response.data[1].valormin;
                     this.ambMax = response.data[1].valormax;
+                    this.activoA = response.data[1].act;
                     this.sueMin = response.data[2].valormin;
                     this.sueMax = response.data[2].valormax;
+                    this.activoS = response.data[1].act;
                     this.tempMin = response.data[0].valormin;
                     this.tempMax = response.data[0].valormax;
+                    this.activoT = response.data[1].act;
                     this.rango = response.data[3].valormax
 
                 })
             },
-            save: function (id, max, min) {
+            save: function (id, max, min, activo) {
 
-                console.log('rango',max);
+               // console.log('rango',max);
+
+                if (!max || !min) {
+                    this.messageE= "Ingrese el campo vacío.";
+                    this.showMessageE= true;
+                }
 
                 this.showS = false;
                 this.showA = false;
@@ -234,7 +244,8 @@
                     data: {
                         id: id,
                         max: max,
-                        min: min
+                        min: min,
+                        act: activo
                     }
                 }).then(response => {
 
