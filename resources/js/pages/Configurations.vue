@@ -366,19 +366,47 @@
 
             cancelS: function () {
                 this.showS = false;
-                this.send()
+                this.send();
+
+                this.errorAmin= false;
+                this.errorAmax= false;
+                this.errorSmax= false;
+                this.errorSmin= false;
+                this.errorTmax= false;
+                this.errorTmin= false;
             },
             cancelA: function () {
                 this.showA = false;
-                this.send()
+                this.send();
+
+                this.errorAmin= false;
+                this.errorAmax= false;
+                this.errorSmax= false;
+                this.errorSmin= false;
+                this.errorTmax= false;
+                this.errorTmin= false;
             },
             cancelT: function () {
                 this.showT = false;
-                this.send()
+                this.send();
+
+                this.errorAmin= false;
+                this.errorAmax= false;
+                this.errorSmax= false;
+                this.errorSmin= false;
+                this.errorTmax= false;
+                this.errorTmin= false;
             },
             cancelI: function () {
                 this.showI = false;
-                this.send()
+                this.send();
+
+                this.errorAmin= false;
+                this.errorAmax= false;
+                this.errorSmax= false;
+                this.errorSmin= false;
+                this.errorTmax= false;
+                this.errorTmin= false;
             },
 
             closeMessage: function () {
