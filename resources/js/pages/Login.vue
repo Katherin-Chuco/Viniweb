@@ -87,6 +87,10 @@
             sendAuth: function () {
 
                // if ( this.validateForm && this.email == "admin@gmail.com" && this.password == '123' ) {
+                if(!this.email || !this.password) {
+                    this.showErrorEmail = "* Completar todos los campos";
+                    return;
+                }
 
                     axios({
                         method: 'post',
@@ -111,7 +115,7 @@
 
 
                     }).catch(function (error) {
-                        this.showErrorEmail = "Ocurrio un error de conexión."
+                        this.showErrorEmail = "Ocurrió un error de conexión."
                     });
 
                 //} else {
