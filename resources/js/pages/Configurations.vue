@@ -168,7 +168,7 @@
                         <button v-if="showI" @click="cancelI" class="btn btn-primary btn-block rounded-full text-white font-bold" >
                             Cancelar
                         </button>
-                        <button v-if="showI" @click="save(5, rango, 0, false)" class="btn btn-primary btn-block rounded-full text-white font-bold" >
+                        <button v-if="showI" @click="save(5, rango, 10, false)" class="btn btn-primary btn-block rounded-full text-white font-bold" >
                             Guardar
                         </button>
 
@@ -259,7 +259,7 @@
 
                 var ningunerror = true;
 
-                if (!max) {
+                if (max !== 0 && !max) {
 
                     if (id == 1) {
 
@@ -271,9 +271,10 @@
 
                     }
                     ningunerror= false;
+
                 }
 
-                if(!min) {
+                if(min !== 0 && !min) {
                     if (id == 1) {
                         this.errorTmin = messageVacio
                     } else if( id == 2) {
@@ -283,6 +284,7 @@
                         this.errorSmin = messageVacio
                     }
                     ningunerror= false;
+
                 }
 
                 if(max < -40 || max > 80 ) {
@@ -297,6 +299,7 @@
 
                     }
                     ningunerror= false;
+
                 }
 
                 if(min < -40 || min > 80 ) {
