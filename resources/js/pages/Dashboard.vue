@@ -6,7 +6,7 @@
 
         <div class="row">
             <card title="Temperatura (Celcius)" type="celcius" :value="temperature" :hour="hourT" :date="dateT"></card>
-            <card title="Humedad del clima" type="porcentaje" :value="climateHumidity " :hour="hourC" :date="dateC"></card>
+            <card title="Humedad del ambiente" type="porcentaje" :value="climateHumidity " :hour="hourC" :date="dateC"></card>
             <card title="Humedad del suelo" type="porcentaje" :value="groundHumidity" :hour="hourG" :date="dateG"></card>
         </div>
 
@@ -36,11 +36,11 @@
               groundHumidityData: ['Humedad del suelo'],
               chartx: [],
               hourT: '',
-              dateT: '',
+              dateT: 'cargando...',
               hourC: '',
-              dateC: '',
+              dateC: 'cargando...',
               hourG: '',
-              dateG: ''
+              dateG: 'cargando...'
 
           }
         },
@@ -56,9 +56,11 @@
 
             objeto.start = "30/04/2019";
 
-            var fin = new Date(this.time2);
-            //objeto.end = ""+fin.getDate() + "/"+(fin.getMonth()+1) + "/" +fin.getFullYear();
-            objeto.end= "08/12/2019";
+            var fin = new Date();
+            var day2 = fin.getDate() < 10 ? "0"+fin.getDate() : ""+fin.getDate();
+            var mes2 = fin.getMonth()+1 < 10 ? ("0"+(fin.getMonth()+1)) : ""+(fin.getMonth()+1);
+            objeto.end = ""+day2 + "/"+mes2 + "/" +fin.getFullYear();
+            //objeto.end= "08/12/2019";
 
             let datos = JSON.stringify(objeto);
 
@@ -110,7 +112,7 @@
                 })
                 .catch(function (error) {
                     // handle error
-                    console.log(error.response);
+                    //console.log(error.response);
                 });
 
         }

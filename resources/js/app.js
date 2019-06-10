@@ -6,8 +6,8 @@ import router from './routes';
 
 window.Vue = Vue;
 window.axios = axios.create({
-    //baseURL: 'http://3.15.9.94:8080/restapiv/',
-    baseURL: 'http://184.73.149.38:8080/restapiv/',
+    //baseURL: '',
+    baseURL: 'http://3.89.226.96:8080/restapiv/',
 });
 
 Vue.use(VueRouter);

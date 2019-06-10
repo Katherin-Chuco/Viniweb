@@ -53,7 +53,7 @@
             axios.get('medidas/humsuelo')
                 .then(response => {
                     // handle success
-                    console.log("Humedad Suelo",response);
+                   // console.log("Humedad Suelo",response);
                     var humTwo = [];
 
                     for (var i = 0; i < response.data.humsSuelo.length; i++) {
@@ -77,7 +77,7 @@
                 method: 'get',
                 url: 'defecto'
             }).then(response => {
-                console.log('Defecto',response)
+                //console.log('Defecto',response)
 
                 this.maxHumidityG = response.data[2].valormin;
                 this.maxHumidityG = response.data[2].valormax;
